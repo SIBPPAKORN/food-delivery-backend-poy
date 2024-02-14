@@ -1,13 +1,13 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "lib": ["ESNext"],
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "strict": true
-  },
-  "include": ["*.ts", "src/"]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"lib": ["ESNext"],
+		"module": "esnext",
+		"target": "esnext",
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"strict": true
+	},
+	"include": ["*.ts", "src/"]
 }
