@@ -27,7 +27,7 @@ router.get(
 				const result = await connection.query(
 					`SELECT * FROM customers WHERE customers.id = "${req.params.id}"`,
 				);
-				res.json({ result });
+				res.status(200).json({ result: result.at(0) });
 			} catch (error) {
 				next(error);
 			} finally {
