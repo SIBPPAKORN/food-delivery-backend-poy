@@ -1,0 +1,42 @@
+import { badRequest } from "@hapi/boom";
+import { Router } from "express";
+import { z } from "zod";
+import { pool } from "../app";
+const router = Router();
+
+router.get(
+	"/customers/:id",
+	(req, res, next) => {
+		const reqParamCustomer = z.object({
+			id: z.coerce.number(),
+		});
+
+		const { success } = reqParamCustomer.safeParse(req.params);
+
+		if (success) {
+			next();
+		} else {
+			next(badRequest());
+		}
+	},
+	async (req, res, next) => {
+		try {
+			const connection = await pool.getConnection();
+
+			try {
+				const result = await connection.query(
+					`SELECT * FROM customers WHERE customers.id = "${req.params.id}"`,
+				);
+				res.json({ result });
+			} catch (error) {
+				next(error);
+			} finally {
+				connection.release();
+			}
+		} catch (error) {
+			next(error);
+		}
+	}, //
+);
+
+export default router;
