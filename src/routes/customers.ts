@@ -6,7 +6,7 @@ const router = Router();
 
 router.get(
 	"/customers/:id",
-	(req, res, next) => {
+	(req, _res, next) => {
 		const reqParamCustomer = z.object({
 			id: z.coerce.number(),
 		});
@@ -16,7 +16,7 @@ router.get(
 		if (success) {
 			next();
 		} else {
-			next(badRequest());
+			next(badRequest("invalid param"));
 		}
 	},
 	async (req, res, next) => {
