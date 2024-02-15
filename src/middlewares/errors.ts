@@ -1,7 +1,7 @@
 import { isBoom } from "@hapi/boom";
 import { NextFunction, Request, Response } from "express";
 
-const errorHandler = (err: Error, _req: Request, res: Response, next: NextFunction) => {
+const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
 	if (isBoom(err)) {
 		res.status(err.output.statusCode).send({ errors: [{ message: err.message }] });
 	} else {
