@@ -7,16 +7,16 @@ const router = Router();
 router.get(
 	"/food_items",
 	(req, _res, next) => {
-		const reqQueryFoodTtems = z.object({
+		const reqQueryFoodItems = z.object({
 			category: z.coerce.string().optional(),
 		});
 
-		const { success } = reqQueryFoodTtems.safeParse(req.query);
+		const { success } = reqQueryFoodItems.safeParse(req.query);
 
 		if (success) {
 			next();
 		} else {
-			next(badRequest("invalid param"));
+			next(badRequest("invalid query"));
 		}
 	},
 	async (req, res, next) => {
@@ -24,9 +24,14 @@ router.get(
 			const connection = await pool.getConnection();
 
 			try {
-				const result = await connection.query(
-					`SELECT * FROM food_items WHERE food_items.category = "${req.query.category}"`,
+				const query = "SELECT * FROM food_items ";
+				// const value = `WHERE food_items.category = "${req.query.category}"`;
+				const connition = query.concat(
+					"",
+					`WHERE food_items.category = "${req.query.category}"`,
 				);
+				console.log(connition);
+				const result = await connection.query(query, connition);
 				res.status(200).json({ result: result.at(0) });
 			} catch (error) {
 				next(error);
