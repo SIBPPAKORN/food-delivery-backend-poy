@@ -25,13 +25,11 @@ router.get(
 
 			try {
 				const query = "SELECT * FROM food_items ";
-				// const value = `WHERE food_items.category = "${req.query.category}"`;
-				const connition = query.concat(
-					"",
-					`WHERE food_items.category = "${req.query.category}"`,
-				);
-				console.log(connition);
-				const result = await connection.query(query, connition);
+				const value = req.query.category
+					? `WHERE food_items.category = "${req.query.category}"`
+					: "";
+
+				const result = await connection.query(query + value);
 				res.status(200).json({ result: result.at(0) });
 			} catch (error) {
 				next(error);
