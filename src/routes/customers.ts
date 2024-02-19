@@ -6,14 +6,14 @@ import { pool } from "../app";
 
 const router = Router();
 
+const schema = z.object({
+	id: z.coerce.number(),
+});
+
 router.get(
 	"/customers/:id",
 	(req, _res, next) => {
-		const reqParamCustomer = z.object({
-			id: z.coerce.number(),
-		});
-
-		const { success } = reqParamCustomer.safeParse(req.params);
+		const { success } = schema.safeParse(req.params);
 
 		if (success) {
 			next();
@@ -26,10 +26,13 @@ router.get(
 			const connection = await pool.getConnection();
 
 			try {
-				const result = await connection.query(
-					`SELECT * FROM customers WHERE customers.id = "${mysql.escape(req.params.id)}"`,
-				);
-				res.status(200).json({ result });
+				const sqlSelect = "SELECT *";
+				const sqlFrom = "FROM customers";
+				const sqlWhere = `WHERE customers.id = ${mysql.escape(req.params.id)}`;
+				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere}`;
+
+				const [data, _metaData] = await connection.query(sqlCommand);
+				res.status(200).json({ data });
 			} catch (error) {
 				next(error);
 			} finally {

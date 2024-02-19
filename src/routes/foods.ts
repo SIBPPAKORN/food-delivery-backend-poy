@@ -6,14 +6,14 @@ import { pool } from "../app";
 
 const router = Router();
 
+const schema = z.object({
+	category: z.coerce.string().optional(),
+});
+
 router.get(
 	"/foods",
 	(req, _res, next) => {
-		const reqQueryFoodItems = z.object({
-			category: z.coerce.string().optional(),
-		});
-
-		const { success } = reqQueryFoodItems.safeParse(req.query);
+		const { success } = schema.safeParse(req.query);
 
 		if (success) {
 			next();
@@ -27,13 +27,15 @@ router.get(
 			const connection = await pool.getConnection();
 
 			try {
-				const sqlSelect = "SELECT * FROM food_items ";
+				const sqlSelect = "SELECT *";
+				const sqlFrom = " FROM food_items";
 				const sqlWhere = req.query.category
 					? `WHERE food_items.category = ${mysql.escape(req.query.category)}`
 					: "";
+				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere}`;
 
-				const result = await connection.query(sqlSelect + sqlWhere);
-				res.status(200).json({ result });
+				const [data, _metaData] = await connection.query(sqlCommand);
+				res.status(200).json({ data });
 			} catch (error) {
 				next(error);
 			} finally {
