@@ -6,7 +6,7 @@ import { pool } from "../app";
 const router = Router();
 
 router.get(
-	"/api/v1/food_items",
+	"/foods",
 	(req, _res, next) => {
 		const reqQueryFoodItems = z.object({
 			category: z.coerce.string().optional(),
@@ -25,12 +25,12 @@ router.get(
 			const connection = await pool.getConnection();
 
 			try {
-				const query = "SELECT * FROM food_items ";
-				const value = req.query.category
+				const sqlSelect = "SELECT * FROM food_items ";
+				const sqlWhere = req.query.category
 					? `WHERE food_items.category = "${req.query.category}"`
 					: "";
 
-				const result = await connection.query(query + value);
+				const result = await connection.query(sqlSelect + sqlWhere);
 				res.status(200).json({ result });
 			} catch (error) {
 				next(error);
