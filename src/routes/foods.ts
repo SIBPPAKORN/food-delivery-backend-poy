@@ -1,5 +1,6 @@
 import { badRequest } from "@hapi/boom";
 import { Router } from "express";
+import mysql from "mysql2/promise";
 import { z } from "zod";
 import { pool } from "../app";
 
@@ -20,6 +21,7 @@ router.get(
 			next(badRequest("invalid query"));
 		}
 	},
+
 	async (req, res, next) => {
 		try {
 			const connection = await pool.getConnection();
@@ -27,7 +29,7 @@ router.get(
 			try {
 				const sqlSelect = "SELECT * FROM food_items ";
 				const sqlWhere = req.query.category
-					? `WHERE food_items.category = "${req.query.category}"`
+					? `WHERE food_items.category = ${mysql.escape(req.query.category)}`
 					: "";
 
 				const result = await connection.query(sqlSelect + sqlWhere);
