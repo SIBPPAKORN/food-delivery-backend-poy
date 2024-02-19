@@ -2,6 +2,7 @@ import { badRequest } from "@hapi/boom";
 import { Router } from "express";
 import { z } from "zod";
 import { pool } from "../app";
+
 const router = Router();
 
 router.get(
@@ -27,7 +28,7 @@ router.get(
 				const result = await connection.query(
 					`SELECT * FROM customers WHERE customers.id = "${req.params.id}"`,
 				);
-				res.status(200).json({ result: result.at(0) });
+				res.status(200).json({ result });
 			} catch (error) {
 				next(error);
 			} finally {
