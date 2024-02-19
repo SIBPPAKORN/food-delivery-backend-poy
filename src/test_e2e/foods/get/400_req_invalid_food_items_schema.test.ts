@@ -5,12 +5,13 @@ afterAll(() => {
 	pool.end();
 });
 
-test("get food_items and reject status 400 for invalid category", async () => {
+test("Test query string validation", async () => {
 	const response = await request(app)
 		.get("/food_items")
-		.query({ a: "f" })
+		.query({ a: "invalid_value" })
 		.expect("Content-Type", /json/)
 		.expect(400);
+
 	const { errors } = response.body;
 	expect(errors[0].message).toContain("invalid query");
 });
