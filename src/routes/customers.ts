@@ -1,5 +1,6 @@
 import { badRequest } from "@hapi/boom";
 import { Router } from "express";
+import mysql from "mysql2/promise";
 import { z } from "zod";
 import { pool } from "../app";
 
@@ -26,7 +27,7 @@ router.get(
 
 			try {
 				const result = await connection.query(
-					`SELECT * FROM customers WHERE customers.id = "${req.params.id}"`,
+					`SELECT * FROM customers WHERE customers.id = "${mysql.escape(req.params.id)}"`,
 				);
 				res.status(200).json({ result });
 			} catch (error) {
