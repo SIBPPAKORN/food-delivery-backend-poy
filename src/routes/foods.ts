@@ -54,7 +54,7 @@ router.get(
 				const sqlOrderBy = nameConnition(name);
 
 				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere} ${sqlOrderBy}`;
-				console.log(sqlCommand);
+
 				const [data, _metaData] = await connection.query(sqlCommand);
 				res.status(200).json({ result: data });
 			} catch (error) {

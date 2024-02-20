@@ -6,6 +6,7 @@ import ServerlessHttp from "serverless-http";
 import errorHandler from "./middlewares/errors";
 import customersRouter from "./routes/customers";
 import foodItemsRouter from "./routes/foods";
+import transactionRouter from "./routes/transaction";
 
 export const app = express();
 
@@ -33,4 +34,6 @@ app.get("/", (req, res) => {
 
 app.use(customersRouter);
 app.use(foodItemsRouter);
+app.use(transactionRouter);
+
 app.use(errorHandler);
