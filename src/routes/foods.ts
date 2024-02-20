@@ -9,7 +9,7 @@ const router = Router();
 const schema = z.object({
 	category: z.coerce.string().optional(),
 	search: z.coerce.string().optional(),
-	name: z.coerce.string().optional(),
+	name: z.string().min(3).max(4).optional(),
 });
 
 router.get(
