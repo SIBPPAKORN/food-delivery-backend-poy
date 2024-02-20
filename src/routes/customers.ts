@@ -32,7 +32,7 @@ router.get(
 				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere}`;
 
 				const [data, _metaData] = await connection.query(sqlCommand);
-				res.status(200).json({ data });
+				res.status(200).json({ result: data });
 			} catch (error) {
 				next(error);
 			} finally {
