@@ -28,8 +28,9 @@ router.get(
 		try {
 			const connection = await pool.getConnection();
 			const category = typeof req.query.category === "string" ? req.query.category : null;
-			const searchText = typeof req.query.search === "string" ? req.query.search : null;
-			const nameAz = typeof req.query.name === "string" ? req.query.name : null;
+			const searchText =
+				typeof req.query.searchText === "string" ? req.query.searchText : null;
+			const searchAz = typeof req.query.searchAz === "string" ? req.query.searchAz : null;
 
 			function categoryConnition(category: string | null): string {
 				return category
@@ -38,8 +39,8 @@ router.get(
 			}
 
 			function searchAzConnition(name: string | null): string {
-				return nameAz
-					? `ORDER BY food_items.name ${nameAz} `
+				return searchAz
+					? `ORDER BY food_items.name ${searchAz} `
 					: "ORDER BY food_items.name ASC";
 			}
 
@@ -53,7 +54,7 @@ router.get(
 				const sqlWhere = `WHERE 1=1 ${categoryConnition(category)}  ${searchTexthConnition(
 					searchText,
 				)}`;
-				const sqlOrderBy = searchAzConnition(nameAz);
+				const sqlOrderBy = searchAzConnition(searchAz);
 
 				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere} ${sqlOrderBy}`;
 
