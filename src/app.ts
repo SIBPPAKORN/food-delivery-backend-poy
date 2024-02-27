@@ -5,7 +5,7 @@ import { createPool } from "mysql2/promise";
 import errorHandler from "./middlewares/errors";
 import customersRouter from "./routes/customers";
 import foodItemsRouter from "./routes/foods";
-import transactionRouter from "./routes/transaction";
+import transactionRouter from "./routes/transactions";
 
 export const app = express();
 
