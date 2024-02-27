@@ -1,6 +1,22 @@
 import request from "supertest";
 import { app, pool } from "../../../src/app";
 
+// describe("poyyyy",()=>{
+
+// 	test("should create fooditems name: t Courses success 2 item", async () => {
+// 		const response = await request(app)
+// 			.get("/foods")
+// 			.query({ name: "cat" })
+
+// 			.expect("Content-Type", /json/)
+// 			.expect(200);
+
+// 		expect(response.body.result.length).toBe(9);
+// 	});
+
+// }
+// )
+
 afterAll(() => {
 	pool.end();
 });
@@ -41,4 +57,15 @@ test("should create fooditems search: t Courses success 2 item", async () => {
 		.expect(200);
 
 	expect(response.body.result.length).toBe(15);
+});
+
+test("should create fooditems name: t Courses success 2 item", async () => {
+	const response = await request(app)
+		.get("/foods")
+		.query({ name: "cat" })
+
+		.expect("Content-Type", /json/)
+		.expect(200);
+
+	expect(response.body.result.length).toBe(9);
 });
