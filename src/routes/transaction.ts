@@ -18,7 +18,6 @@ router.post(
 	"/transactions",
 	(req, _res, next) => {
 		const { success } = reqBodyTransactions.safeParse(req.body);
-		console.log(req.body);
 
 		if (success) {
 			next();
