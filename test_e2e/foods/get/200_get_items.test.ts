@@ -1,33 +1,17 @@
 import request from "supertest";
 import { app, pool } from "../../../src/app";
 
-// describe("poyyyy",()=>{
-
-// 	test("should create fooditems name: t Courses success 2 item", async () => {
-// 		const response = await request(app)
-// 			.get("/foods")
-// 			.query({ name: "cat" })
-
-// 			.expect("Content-Type", /json/)
-// 			.expect(200);
-
-// 		expect(response.body.result.length).toBe(9);
-// 	});
-
-// }
-// )
-
 afterAll(() => {
 	pool.end();
 });
 
-test("should create fooditems success 15 item", async () => {
+test("should return all foods", async () => {
 	const response = await request(app).get("/foods").expect("Content-Type", /json/).expect(200);
 
 	expect(response.body.result.length).toBe(15);
 });
 
-test("should create fooditems category:Main Courses success 2 item", async () => {
+test("should return only Main Courses", async () => {
 	const response = await request(app)
 		.get("/foods")
 		.query({ category: "Main Courses" })
@@ -37,7 +21,7 @@ test("should create fooditems category:Main Courses success 2 item", async () =>
 	expect(response.body.result.length).toBe(2);
 });
 
-test("should create fooditems search: t Courses success 2 item", async () => {
+test("should return  Everything with the letter t ", async () => {
 	const response = await request(app)
 		.get("/foods")
 		.query({ search: "t" })
@@ -48,7 +32,7 @@ test("should create fooditems search: t Courses success 2 item", async () => {
 	expect(response.body.result.length).toBe(9);
 });
 
-test("should create fooditems search: t Courses success 2 item", async () => {
+test("should return initials a-z", async () => {
 	const response = await request(app)
 		.get("/foods")
 		.query({ name: "ASC" })
@@ -57,15 +41,4 @@ test("should create fooditems search: t Courses success 2 item", async () => {
 		.expect(200);
 
 	expect(response.body.result.length).toBe(15);
-});
-
-test("should create fooditems name: t Courses success 2 item", async () => {
-	const response = await request(app)
-		.get("/foods")
-		.query({ name: "cat" })
-
-		.expect("Content-Type", /json/)
-		.expect(200);
-
-	expect(response.body.result.length).toBe(9);
 });
