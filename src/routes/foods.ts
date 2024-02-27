@@ -9,7 +9,7 @@ const router = Router();
 const schema = z.object({
 	category: z.coerce.string().optional(),
 	search: z.coerce.string().optional(),
-	name: z.string().min(3).max(4).optional(),
+	searchAz: z.string().min(3).max(4).optional(),
 });
 
 router.get(
@@ -37,7 +37,7 @@ router.get(
 					: "";
 			}
 
-			function nameConnition(name: string | null): string {
+			function searchAzConnition(name: string | null): string {
 				return name ? `ORDER BY food_items.name ${name} ` : "ORDER BY food_items.name ASC";
 			}
 
@@ -51,7 +51,7 @@ router.get(
 				const sqlWhere = `WHERE 1=1 ${categoryConnition(category)}  ${searchConnition(
 					search,
 				)}`;
-				const sqlOrderBy = nameConnition(name);
+				const sqlOrderBy = searchAzConnition(name);
 
 				const sqlCommand = `${sqlSelect} ${sqlFrom} ${sqlWhere} ${sqlOrderBy}`;
 
