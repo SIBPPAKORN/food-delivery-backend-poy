@@ -2,7 +2,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import { createPool } from "mysql2/promise";
-import ServerlessHttp from "serverless-http";
 import errorHandler from "./middlewares/errors";
 import customersRouter from "./routes/customers";
 import foodItemsRouter from "./routes/foods";
@@ -13,8 +12,6 @@ export const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
-
-export const handler = ServerlessHttp(app);
 
 export const pool = createPool({
 	connectionLimit: 1,
