@@ -8,7 +8,7 @@ const router = Router();
 
 const schema = z.object({
 	category: z.coerce.string().optional(),
-	search: z.coerce.string().optional(),
+	searchText: z.coerce.string().optional(),
 	searchAz: z.string().min(3).max(4).optional(),
 });
 
@@ -28,7 +28,7 @@ router.get(
 		try {
 			const connection = await pool.getConnection();
 			const category = typeof req.query.category === "string" ? req.query.category : null;
-			const search = typeof req.query.search === "string" ? req.query.search : null;
+			const searchText = typeof req.query.search === "string" ? req.query.search : null;
 			const name = typeof req.query.name === "string" ? req.query.name : null;
 
 			function categoryConnition(category: string | null): string {
@@ -41,15 +41,15 @@ router.get(
 				return name ? `ORDER BY food_items.name ${name} ` : "ORDER BY food_items.name ASC";
 			}
 
-			function searchConnition(search: string | null): string {
+			function searchTexthConnition(search: string | null): string {
 				return search ? `AND food_items.name LIKE ${mysql.escape(`%${search}%`)} ` : "";
 			}
 
 			try {
 				const sqlSelect = "SELECT *";
 				const sqlFrom = "FROM food_items";
-				const sqlWhere = `WHERE 1=1 ${categoryConnition(category)}  ${searchConnition(
-					search,
+				const sqlWhere = `WHERE 1=1 ${categoryConnition(category)}  ${searchTexthConnition(
+					searchText,
 				)}`;
 				const sqlOrderBy = searchAzConnition(name);
 
