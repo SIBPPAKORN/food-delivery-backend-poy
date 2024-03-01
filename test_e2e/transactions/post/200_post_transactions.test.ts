@@ -10,7 +10,7 @@ test("check data before create transactions", async () => {
 	const connection = await pool.getConnection();
 
 	const [data, _metaData] = await connection.query<RowDataPacket[]>("SELECT * FROM transactions");
-	expect(data).toHaveLength(0);
+	expect(data).toHaveLength(1);
 	connection.release();
 });
 
@@ -32,11 +32,11 @@ test("create transactions", async () => {
 	expect(response.body.result).toEqual("ok");
 });
 
-test("check data before create transactions", async () => {
+test("check data after create transactions", async () => {
 	const connection = await pool.getConnection();
 
 	const [data, _metaData] = await connection.query<RowDataPacket[]>("SELECT * FROM transactions");
-	expect(data).toHaveLength(1);
+	expect(data).toHaveLength(2);
 
 	connection.release();
 });
