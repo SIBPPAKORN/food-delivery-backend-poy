@@ -24,7 +24,7 @@ test("should return only Main Courses", async () => {
 test("should return  Everything with the letter t ", async () => {
 	const response = await request(app)
 		.get("/foods")
-		.query({ search: "t" })
+		.query({ searchText: "t" })
 
 		.expect("Content-Type", /json/)
 		.expect(200);
@@ -35,7 +35,7 @@ test("should return  Everything with the letter t ", async () => {
 test("should return initials a-z", async () => {
 	const response = await request(app)
 		.get("/foods")
-		.query({ name: "ASC" })
+		.query({ searchAz: "ASC" })
 
 		.expect("Content-Type", /json/)
 		.expect(200);
