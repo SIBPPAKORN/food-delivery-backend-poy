@@ -19,7 +19,7 @@ export function execSingleSqlScript(absPath: string): void {
 	}
 
 	execSync(
-		`mysql --user=host --password=host --host=127.0.0.1 --port=3306 < ${absPath} 2> /dev/null`,
+		`mysql --user=poy --password=poy --host=127.0.0.1 --port=3306 < ${absPath} 2> /dev/null`,
 	);
 }
 
@@ -29,7 +29,7 @@ export function execSqlScript(absPathList: string[]): void {
 
 export function restoreDb(): void {
 	execSqlScript([
-		path.join(__dirname, "../../../devbc-fooddb-mysql/database/0_fooddb.structure.sql"),
-		path.join(__dirname, "../../../devbc-fooddb-mysql/database/1_fooddb.seed.sql"),
+		path.join(__dirname, "../../../../devbc-fooddb-mysql/database/0_fooddb.structure.sql"),
+		path.join(__dirname, "../../../../devbc-fooddb-mysql/database/1_fooddb.seed.sql"),
 	]);
 }
