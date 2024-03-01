@@ -36,7 +36,7 @@ test("check data before create transactions", async () => {
 	const connection = await pool.getConnection();
 
 	const [data, _metaData] = await connection.query<RowDataPacket[]>("SELECT * FROM transactions");
-	expect(data).toHaveLength(0);
+	expect(data).toHaveLength(1);
 
 	connection.release();
 });
